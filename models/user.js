@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const userSchema = Schema(
   {
@@ -32,19 +32,17 @@ userSchema.methods.setPassword = function (password) {
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
-const User = model("user", userSchema);
 
 const userJoiSсhema = Joi.object({
   password: Joi.string().required(),
   email: Joi.string().required(),
 });
 
-const joiSchemaSub = Joi.object({
-  subscription: Joi.string().valid("starter", "pro", "business").required(),
-});
-
+// const joiSchemaSub = Joi.object({
+//   subscription: Joi.string().valid("starter", "pro", "business").required(),
+// });
+const User = model("user", userSchema);
 module.exports = {
   User,
   userJoiSсhema,
-  joiSchemaSub,
 };
